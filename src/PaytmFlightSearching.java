@@ -7,9 +7,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import java.util.Collections;
 import java.util.List;
 
-public class PaytmFlightBooking {
+public class PaytmFlightSearching {
     public static void main(String[] args) throws InterruptedException {
-        System.setProperty("webdriver.chrome.driver","C:\\Users\\JDCA\\Downloads\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "C:\\Users\\JDCA\\Downloads\\chromedriver.exe");
 
         WebDriver webDriver = new ChromeDriver();
         webDriver.navigate().to("https://paytm.com/");
@@ -31,15 +31,12 @@ public class PaytmFlightBooking {
 
         String selectMonth = "September '21";
 //            get month from the date picker
-        while (true)
-        {
+        while (true) {
             String fMonth = webDriver.findElement(By.xpath("//*[@id=\"datePickerOnward\"]/div[2]/div/div/p")).getText();
 
             if (fMonth.equals(selectMonth)) {
                 break;
-            }
-
-            else {
+            } else {
                 webDriver.findElement(By.xpath("//*[@id=\"moveToNext\"]")).click();
                 Thread.sleep(2000);
             }
@@ -62,15 +59,18 @@ public class PaytmFlightBooking {
 //        click on search
         WebElement search = webDriver.findElement(By.xpath("//*[@id=\"flightsBookingForm\"]/div[2]/div[8]/div/button"));
         search.click();
-
-
     }
 
-    private static void enterData(WebElement webElement, String city, int time) throws InterruptedException {
-        webElement.sendKeys(city);
+    private static void clearData(WebElement cityTextBox) {
+        cityTextBox.sendKeys(Keys.CONTROL + "a");
+        cityTextBox.sendKeys(Keys.DELETE);
+    }
+
+    private static void enterData(WebElement cityTextBox, String city, int time) throws InterruptedException {
+        cityTextBox.sendKeys(city);
         Thread.sleep(time);
-        webElement.sendKeys(Keys.ARROW_DOWN);
-        webElement.sendKeys(Keys.ENTER);
+        cityTextBox.sendKeys(Keys.ARROW_DOWN);
+        cityTextBox.sendKeys(Keys.ENTER);
         Thread.sleep(time);
     }
 }
